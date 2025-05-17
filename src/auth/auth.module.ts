@@ -22,5 +22,6 @@ console.log(process.env.JWT_SECRET);
       }),
     }),
   ],
+  exports: [JwtModule],
 })
 export class AuthModule {}
