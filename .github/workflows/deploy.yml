@@ -30,8 +30,8 @@ jobs:
 
       - name: Build docker images
         run: |
-          docker build -t ${{steps.login-ecr.outputs.registry}}//${{env.ECR_REPOSITORY}}:${{github.sha}} .
+          docker build -t ${{steps.login-ecr.outputs.registry}}/${{env.ECR_REPOSITORY}}:${{github.sha}} .
       - name : push docker images to ecr
         run: |
-          docker push ${{steps.login-ecr.outputs.registry}}//${{env.ECR_REPOSITORY}}:${{github.sha}}
+          docker push ${{steps.login-ecr.outputs.registry}}/${{env.ECR_REPOSITORY}}:${{github.sha}}
         

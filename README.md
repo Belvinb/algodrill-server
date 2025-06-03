@@ -30,6 +30,7 @@ NestJs, MongoDB
 
 ## Current Features
 1. User Auth
+2. CI/CD pipeline
 
 ## Upcoming Features
 1. Add/Edit dsa questions
