@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RevisionModule } from './revision/revision.module';
 
 console.log(process.env.DB_URL);
 @Module({
@@ -22,6 +23,7 @@ console.log(process.env.DB_URL);
     // }),
     UserModule,
     AuthModule,
+    RevisionModule,
   ],
   controllers: [AppController],
   providers: [
