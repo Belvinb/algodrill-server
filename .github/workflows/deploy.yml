@@ -1,0 +1,37 @@
+name: Build and push docker images to ecr
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: ap-south-1
+  ECR_REPOSITORY: algodrill-api
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{env.AWS_REGION}}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build docker images
+        run: |
+          docker build -t ${{steps.login-ecr.outputs.registry}}//${{env.ECR_REPOSITORY}}:${{github.sha}} .
+      - name : push docker images to ecr
+        run: |
+          docker push ${{step.login-ecr.outputs.registry}}//${{env.ECR_REPOSITORY}}:${{github.sha}}
+        
