@@ -33,5 +33,5 @@ jobs:
           docker build -t ${{steps.login-ecr.outputs.registry}}//${{env.ECR_REPOSITORY}}:${{github.sha}} .
       - name : push docker images to ecr
         run: |
-          docker push ${{step.login-ecr.outputs.registry}}//${{env.ECR_REPOSITORY}}:${{github.sha}}
+          docker push ${{steps.login-ecr.outputs.registry}}//${{env.ECR_REPOSITORY}}:${{github.sha}}
         
