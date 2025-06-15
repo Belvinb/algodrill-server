@@ -1,0 +1,33 @@
+{
+  "family": "algodrill-api",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "algodrill-api",
+      "image": "<IMAGE_PLACEHOLDER>",
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "hostPort": 5000,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+        "environment": [
+            {
+            "name": "DB_URL",
+            "value": "<DB_URL_PLACEHOLDER>"
+            },
+            {
+            "name": "JWT_SECRET",
+            "value": "<JWT_SECRET_PLACEHOLDER>"
+            }
+        ]
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512"
+}
