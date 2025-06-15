@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user.schema';
 import { Model } from 'mongoose';
-import { RegisterDto, SuccessDto } from 'src/auth/dto/auth.dto';
+import { RegisterDto, SuccessDto } from '../auth/dto/auth.dto';
 
 @Injectable()
 export class UserService {

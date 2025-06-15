@@ -4,7 +4,7 @@ import {
   Difficulty,
   RevisionLevel,
   Type,
-} from 'src/common/enums/revision.enum';
+} from '../../common/enums/revision.enum';
 
 export type QuestionDocument = HydratedDocument<Question>;
 
@@ -16,14 +16,14 @@ export class Question {
   question: string;
   @Prop()
   userId: string;
-  @Prop()
+  @Prop({ enum: RevisionLevel, type: String })
   revisionLevel: RevisionLevel;
 
   @Prop()
   nextRevisionDate: Date;
-  @Prop()
+  @Prop({ enum: Difficulty, type: String })
   difficulty: Difficulty;
-  @Prop()
+  @Prop({ enum: Type, type: String })
   type: Type;
 
   @Prop()

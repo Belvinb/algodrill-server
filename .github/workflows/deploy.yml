@@ -8,6 +8,8 @@ on:
 env:
   AWS_REGION: ap-south-1
   ECR_REPOSITORY: algodrill-api
+  ECS_CLUSTER: algodrill-api
+  ECS_SERVICE: algodrill-api
 
 jobs:
   build-and-push:
@@ -31,7 +33,22 @@ jobs:
       - name: Build docker images
         run: |
           docker build -t ${{steps.login-ecr.outputs.registry}}/${{env.ECR_REPOSITORY}}:${{github.sha}} .
-      - name : push docker images to ecr
+      - name: push docker images to ecr
         run: |
           docker push ${{steps.login-ecr.outputs.registry}}/${{env.ECR_REPOSITORY}}:${{github.sha}}
         
+      - name: Fill in the new image id in the ecs task ECS_TASK_DEFINITION
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ecs-task-definition.json
+          container-name: algodrill-api
+          image: ${{steps.login-ecr.outputs.registry}}/${{env.ECR_REPOSITORY}}:${{github.sha}}
+          
+      - name: Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{steps.task-def.outputs.task-definition}}
+          service: ${{env.ECS_SERVICE}}
+          cluster: ${{env.ECS_CLUSTER}}
+          wait-for-service-stability: true

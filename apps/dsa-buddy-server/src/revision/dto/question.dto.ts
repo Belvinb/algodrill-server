@@ -3,7 +3,7 @@ import {
   Difficulty,
   RevisionLevel,
   Type,
-} from 'src/common/enums/revision.enum';
+} from '../../common/enums/revision.enum';
 
 export class CreateQuestionDto {
   @ApiProperty()

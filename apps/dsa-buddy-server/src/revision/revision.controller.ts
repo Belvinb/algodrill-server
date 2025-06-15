@@ -1,15 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { RevisionService } from './revision.service';
 import { CreateQuestionDto } from './dto/question.dto';
 
-import { Public } from 'src/auth/public.decorator';
-import {
-  Difficulty,
-  RevisionLevel,
-  Type,
-} from 'src/common/enums/revision.enum';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import { Public } from '../auth/public.decorator';
+import { RevisionLevel, Difficulty, Type } from '../common/enums/revision.enum';
 
 @Controller('revision')
+@UseInterceptors(CacheInterceptor)
 export class RevisionController {
   constructor(private readonly revisionService: RevisionService) {}
   @Public()
