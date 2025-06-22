@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Question, QuestionSchema } from './schemas/question.schema';
 import { Answer, AnswerSchema } from './schemas/answer.schema';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -13,6 +14,17 @@ import { CacheModule } from '@nestjs/cache-manager';
       { name: Answer.name, schema: AnswerSchema },
     ]),
     CacheModule.register(),
+    ClientsModule.register([
+      {
+        name: 'REVISION_SERVICE',
+        transport: Transport.RMQ,
+
+        options: {
+          urls: ['amqp://localhost:5672'],
+          queue: 'revision_queue',
+        },
+      },
+    ]),
   ],
   controllers: [RevisionController],
   providers: [RevisionService],
