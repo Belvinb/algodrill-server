@@ -33,4 +33,10 @@ export class RevisionController {
   async createQuestion(@Body() createQuestionDto: CreateQuestionDto) {
     return this.revisionService.createQuestion(createQuestionDto);
   }
+
+  @Public()
+  @Post('submit-answer')
+  async submitAnswer() {
+    return this.revisionService.submitAnser();
+  }
 }
